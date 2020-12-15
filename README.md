@@ -88,7 +88,7 @@ POST http://127.0.0.1:8080/license/upload
 
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
-![截图5](/screenshot/5.jpg)
+<img width="450" alt="截图5" src="/screenshot/5.jpg"/>
 
 ### 下载License文件
 
