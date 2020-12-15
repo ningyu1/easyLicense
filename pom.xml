@@ -20,24 +20,18 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<!-- 打包时忽略测试代码 -->
-		<skipTests>true</skipTests>
-		<!-- JUnit单元测试 -->
-		<junit>4.12</junit>
-		<!-- Apache Commons系列公共库 -->
+		<junit>4.13.1</junit>
 		<commons-lang3>3.7</commons-lang3>
 		<commons-io>2.6</commons-io>
 		<commons-codec>1.11</commons-codec>
-		<!-- Apache HttpClient -->
 		<httpclient>4.5.5</httpclient>
-		<!-- Fastjson -->
 		<fastjson>1.2.47</fastjson>
-		<!-- Java Servlet API -->
 		<javax.servlet-api>4.0.1</javax.servlet-api>
-		<!-- License -->
 		<truelicense>1.33</truelicense>
 		<jna.version>5.6.0</jna.version>
 		<oshi.version>5.3.6</oshi.version>
+		<nekohtml>1.9.22</nekohtml>
+		<surefire-plugin>2.4.2</surefire-plugin>
 	</properties>
 
 	<dependencies>
@@ -150,7 +144,7 @@
 		<dependency>
 			<groupId>net.sourceforge.nekohtml</groupId>
 			<artifactId>nekohtml</artifactId>
-			<version>1.9.22</version>
+			<version>${nekohtml}</version>
 		</dependency>
 
 	</dependencies>
@@ -164,7 +158,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.4.2</version>
+				<version>${surefire-plugin}</version>
 			</plugin>
 		</plugins>
 
