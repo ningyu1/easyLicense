@@ -5,6 +5,7 @@ import oshi.hardware.HardwareAbstractionLayer;
 import oshi.hardware.NetworkIF;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,12 +31,12 @@ public class LicenseCheckModel implements Serializable{
     /**
      * 可被允许的CPU序列号
      */
-    private String cpuSerial;
+    private List<String> cpuSerial;
 
     /**
      * 可被允许的主板序列号
      */
-    private String mainBoardSerial;
+    private List<String> mainBoardSerial;
 
     public List<String> getIpAddress() {
         return ipAddress;
@@ -53,19 +54,19 @@ public class LicenseCheckModel implements Serializable{
         this.macAddress = macAddress;
     }
 
-    public String getCpuSerial() {
+    public List<String> getCpuSerial() {
         return cpuSerial;
     }
 
-    public void setCpuSerial(String cpuSerial) {
+    public void setCpuSerial(List<String> cpuSerial) {
         this.cpuSerial = cpuSerial;
     }
 
-    public String getMainBoardSerial() {
+    public List<String> getMainBoardSerial() {
         return mainBoardSerial;
     }
 
-    public void setMainBoardSerial(String mainBoardSerial) {
+    public void setMainBoardSerial(List<String> mainBoardSerial) {
         this.mainBoardSerial = mainBoardSerial;
     }
 
@@ -74,8 +75,8 @@ public class LicenseCheckModel implements Serializable{
         return "LicenseCheckModel{" +
                 "ipAddress=" + ipAddress +
                 ", macAddress=" + macAddress +
-                ", cpuSerial='" + cpuSerial + '\'' +
-                ", mainBoardSerial='" + mainBoardSerial + '\'' +
+                ", cpuSerial=" + cpuSerial +
+                ", mainBoardSerial=" + mainBoardSerial +
                 '}';
     }
 
@@ -83,7 +84,7 @@ public class LicenseCheckModel implements Serializable{
         SystemInfo si = new SystemInfo();
         HardwareAbstractionLayer hal = si.getHardware();
         //cpu序列号
-        setCpuSerial(hal.getProcessor().getProcessorIdentifier().getProcessorID());
+        setCpuSerial(Arrays.asList(hal.getProcessor().getProcessorIdentifier().getProcessorID()));
         List<NetworkIF> list = hal.getNetworkIFs();
         List<String> ownIpv4Adds = new ArrayList<>();
         List<String> macAdds = new ArrayList<>();
@@ -96,6 +97,6 @@ public class LicenseCheckModel implements Serializable{
         //mac地址
         setMacAddress(macAdds);
         //主板序列号
-        setMainBoardSerial(hal.getComputerSystem().getBaseboard().getSerialNumber());
+        setMainBoardSerial(Arrays.asList(hal.getComputerSystem().getBaseboard().getSerialNumber()));
     }
 }

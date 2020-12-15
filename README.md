@@ -1,86 +1,105 @@
-# LicenseDemo
+# EasyLicense
 
-#### 项目介绍
-在基于Spring的项目中使用 `TrueLicense `生成和验证`License证书`（服务器许可）的示例代码
+## 项目介绍
+使用 `TrueLicense `生成和验证`License证书`（服务器许可）
 
-#### 技术依赖：
+## 技术依赖
 * `Spring Boot`：项目基础架构
 * `TrueLicense `：基于`Java`实现的生成和验证服务器许可的简单框架
 
-#### 环境依赖：
+## 环境依赖
 * `JDK8+`
 
-#### 两个子项目说明： ####
+## 两个子项目说明
 
-- `ServerDemo`：用于**开发者**给客户生成`License证书`的示例代码
-- `ClientDemo`：**模拟需要给客户部署的业务项目**
+- `easyLicense-client`: 验证`License证书`
+- `easyLicense-core`: 证书核心
+- `easyLicense-server`: 生成`License证书`
 
-#### ServerDemo项目： ####
+## easyLicense-server
 
-对外发布了两个RESTful接口：
+### 获取服务器硬件信息
 
-（1）获取服务器硬件信息 ：
+1. 通过页面查看，用于授权时获取客户机器信息时使用
 
-请求地址：`http://127.0.0.1:7000/license/getServerInfos`
+请求地址：`http://127.0.0.1:8080/index`
 
-![获取服务器硬件信息](https://www.zifangsky.cn/wp-content/uploads/2018/07/20180710140711.png)
+![截图1](/screenshot/1.png)
 
-（2）生成证书 ：
+2. 通过RESTful接口
 
-请求地址：`http://127.0.0.1:7000/license/generateLicense`
+GET `http://127.0.0.1:8080/license/getServerInfos`
 
-请求时需要在Header中添加一个 **Content-Type** ，其值为：**application/json;charset=UTF-8**。请求参数如下： 
+![截图2](/screenshot/2.png)
+
+### 生成证书 ：
+
+1. 通过页面
+
+请求地址：`http://127.0.0.1:8080/gen`
+
+![截图3](/screenshot/3.png)
+![截图4](/screenshot/4.png)
+
+2. 通过RESTful接口
+
+POST http://127.0.0.1:8080/license/generate 
+Content-Type: application/json
 
 ```json
 {
-	"subject": "license_demo",
-	"privateAlias": "privateKey",
-	"keyPass": "private_password1234",
-	"storePass": "public_password1234",
-	"licensePath": "C:/Users/zifangsky/Desktop/license_demo/license.lic",
-	"privateKeysStorePath": "C:/Users/zifangsky/Desktop/license_demo/privateKeys.keystore",
+	"subject": "SYSHLANG_LICENSE",
+	"privateAlias": "alias",
+	"keyPass": "12345A67",
+	"storePass": "12345A67",
+	"privateKeysStorePath": "f2a67dbac33040018d9247b43357a3f8",
 	"issuedTime": "2018-07-10 00:00:01",
-	"expiryTime": "2019-12-31 23:59:59",
+	"expiryTime": "2020-12-04 18:59:59",
 	"consumerType": "User",
 	"consumerAmount": 1,
 	"description": "这是证书描述信息",
 	"licenseCheckModel": {
-		"ipAddress": ["192.168.245.1", "10.0.5.22"],
-		"macAddress": ["00-50-56-C0-00-01", "50-7B-9D-F9-18-41"],
-		"cpuSerial": "BFEBFBFF000406E3",
-		"mainBoardSerial": "L1HF65E00X9"
+		"ipAddress": ["192.168.8.63", "10.0.5.22"],
+		"macAddress": ["a4:83:e7:5a:5e:64", "50-7B-9D-F9-18-41"],
+		"cpuSerial": ["BFEBFBFF000806EA"],
+		"mainBoardSerial": ["FVFZ2E0HL410"]
 	}
 }
 ```
+ps. privateKeysStorePath需要先上传私钥文件获取文件id
 
-![生成证书](https://www.zifangsky.cn/wp-content/uploads/2018/07/20180710141528.png)
+### 上传私钥文件
 
-#### ClientDemo项目： ####
+1. 通过页面
 
-项目启动时安装证书，通过`cn/zifangsky/license/LicenseCheckListener.java`类实现。用户登录时校验证书的可用性，通过`cn/zifangsky/license/LicenseCheckInterceptor.java`类实现。
+请求地址：`http://127.0.0.1:8080/gen`
 
-#### 特别说明： ####
+![截图3](/screenshot/3.png)
+![截图4](/screenshot/4.png)
 
-详细开发思路可以参考我写的这篇文章：[https://www.zifangsky.cn/1277.html](https://www.zifangsky.cn/1277.html)
+2. 通过RESTful接口：
 
+POST http://127.0.0.1:8080/license/upload
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
-#生成命令
-keytool -genkeypair -keysize 1024 -validity 3650 -alias "alias" -keystore "privateKeys.keystore" -storepass "12345A67" -keypass "12345A67" -dname "CN=localhost, OU=localhost, O=localhost, L=SH, ST=SH, C=CN"
+![截图5](/screenshot/5.png)
 
-#导出命令
-keytool -exportcert -alias "alias" -keystore "privateKeys.keystore" -storepass "12345A67" -file "certfile.cer"
+## easyLicense-client
 
-#导入命令
-keytool -import -alias "alias" -file "certfile.cer" -keystore "publicCerts.keystore" -storepass "12345A67"
+## 生成证书
 
-# 示例
+### 生成命令
 ```shell script
-#1.首先要用KeyTool工具来生成私匙库：（-alias别名 –validity 3650表示10年有效）
-keytool -genkey -alias privatekey -keystore privateKeys.store -validity 3650
-#2.然后把私匙库内的公匙导出到一个文件当中：
-keytool -export -alias privatekey -file certfile.cer -keystore privateKeys.store
-#3.然后再把这个证书文件导入到公匙库：
-keytool -import -alias publiccert -file certfile.cer -keystore publicCerts.store
-#4.最后生成文件privateKeys.store、publicCerts.store拷贝出来备用。
+keytool -genkeypair -keysize 1024 -validity 3650 -alias "alias" -keystore "privateKeys.keystore" -storepass "12345A67" -keypass "12345A67" -dname "CN=localhost, OU=localhost, O=localhost, L=SH, ST=SH, C=CN"
+```
+
+### 导出命令
+```shell script
+keytool -exportcert -alias "alias" -keystore "privateKeys.keystore" -storepass "12345A67" -file "certfile.cer"
+```
+
+### 导入命令
+```shell script
+keytool -import -alias "alias" -file "certfile.cer" -keystore "publicCerts.keystore" -storepass "12345A67"
 ```
 

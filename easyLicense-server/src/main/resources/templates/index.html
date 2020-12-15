@@ -3,10 +3,10 @@
     <meta content="text/html;charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>首页</title>
+    <title>服务器信息</title>
     <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-    <link href="/static/jquery.jsonview.css" rel="stylesheet">
-    <script src="/static/jquery.jsonview.js"></script>
+    <link href="/static/css/jquery.jsonview.css" rel="stylesheet">
+    <script src="/static/js/jquery.jsonview.js"></script>
 </head>
 <body>
 <h2>服务器信息</h2>
@@ -43,7 +43,7 @@
     $(function() {
         //$("#json").JSONView(json);
 
-        $.get("/license/getServerInfos", function(result){
+        $.get("/license/server_info", function(result){
             $("#json").JSONView(result);
         });
 

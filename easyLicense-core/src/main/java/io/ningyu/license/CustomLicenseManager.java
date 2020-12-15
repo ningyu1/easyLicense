@@ -140,22 +140,22 @@ public class CustomLicenseManager extends LicenseManager{
 
         if(expectedCheckModel != null && serverCheckModel != null){
             //校验IP地址
-            if(!checkIpAddress(expectedCheckModel.getIpAddress(),serverCheckModel.getIpAddress())){
+            if(!check(expectedCheckModel.getIpAddress(),serverCheckModel.getIpAddress())){
                 throw new LicenseContentException("当前服务器的IP没在授权范围内");
             }
 
             //校验Mac地址
-            if(!checkIpAddress(expectedCheckModel.getMacAddress(),serverCheckModel.getMacAddress())){
+            if(!check(expectedCheckModel.getMacAddress(),serverCheckModel.getMacAddress())){
                 throw new LicenseContentException("当前服务器的Mac地址没在授权范围内");
             }
 
             //校验主板序列号
-            if(!checkSerial(expectedCheckModel.getMainBoardSerial(),serverCheckModel.getMainBoardSerial())){
+            if(!check(expectedCheckModel.getMainBoardSerial(),serverCheckModel.getMainBoardSerial())){
                 throw new LicenseContentException("当前服务器的主板序列号没在授权范围内");
             }
 
             //校验CPU序列号
-            if(!checkSerial(expectedCheckModel.getCpuSerial(),serverCheckModel.getCpuSerial())){
+            if(!check(expectedCheckModel.getCpuSerial(),serverCheckModel.getCpuSerial())){
                 throw new LicenseContentException("当前服务器的CPU序列号没在授权范围内");
             }
         }else{
@@ -213,7 +213,7 @@ public class CustomLicenseManager extends LicenseManager{
      * @param serverList
      * @return boolean
      */
-    private boolean checkIpAddress(List<String> expectedList,List<String> serverList){
+    private boolean check(List<String> expectedList,List<String> serverList){
         if(expectedList != null && expectedList.size() > 0){
             if(serverList != null && serverList.size() > 0){
                 for(String expected : expectedList){
@@ -222,29 +222,8 @@ public class CustomLicenseManager extends LicenseManager{
                     }
                 }
             }
-
             return false;
         }else {
-            return true;
-        }
-    }
-
-    /**
-     * 校验当前服务器硬件（主板、CPU等）序列号是否在可允许范围内
-     * @param expectedSerial
-     * @param serverSerial
-     * @return boolean
-     */
-    private boolean checkSerial(String expectedSerial,String serverSerial){
-        if(StringUtils.isNotBlank(expectedSerial)){
-            if(StringUtils.isNotBlank(serverSerial)){
-                if(expectedSerial.equals(serverSerial)){
-                    return true;
-                }
-            }
-
-            return false;
-        }else{
             return true;
         }
     }

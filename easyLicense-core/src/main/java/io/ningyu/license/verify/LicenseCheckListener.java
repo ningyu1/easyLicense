@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  *
  * @author ningyu
  */
-@Component
+//@Component
 public class LicenseCheckListener implements ApplicationListener<ContextRefreshedEvent> {
     private static Logger logger = LogManager.getLogger(LicenseCheckListener.class);
 

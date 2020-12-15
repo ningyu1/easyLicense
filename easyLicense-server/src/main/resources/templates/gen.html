@@ -1,0 +1,296 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html;charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>生成证书</title>
+<!--    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+<!--    <script src="https://unpkg.com/element-ui/lib/index.js"></script>-->
+<!--    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>-->
+    <link rel="stylesheet" href="/static/css/index.css">
+    <script src="/static/js/vue.js"></script>
+    <script src="/static/js/index.js"></script>
+    <script src="/static/js/axios.min.js"></script>
+</head>
+
+<body>
+<div id="app">
+    <el-tabs v-model="activeName">
+        <el-tab-pane label="生成证书" name="gen">
+            <el-form ref="elForm" :model="formData" :rules="rules" size="medium" label-width="150px">
+                <el-form-item label="subject" prop="subject">
+                    <el-input v-model="formData.subject" placeholder="请输入subject（标题）" :maxlength="50" show-word-limit
+                              clearable prefix-icon='el-icon-mobile' :style="{width: '50%'}"></el-input>
+                </el-form-item>
+                <el-form-item label="alias" prop="privateAlias">
+                    <el-input v-model="formData.privateAlias" placeholder="请输入alias（别名）" :maxlength="50" show-word-limit clearable
+                              prefix-icon='el-icon-mobile' :style="{width: '50%'}"></el-input>
+                </el-form-item>
+                <el-form-item label="keypass" prop="keyPass">
+                    <el-input v-model="formData.keyPass" placeholder="请输入keypass（私钥密码）" show-password :maxlength="50" show-word-limit
+                              clearable prefix-icon='el-icon-mobile' :style="{width: '50%'}"></el-input>
+                </el-form-item>
+                <el-form-item label="storepass" prop="storePass">
+                    <el-input v-model="formData.storePass" placeholder="请输入storepass（库密码）" show-password :maxlength="50" show-word-limit
+                              clearable prefix-icon='el-icon-mobile' :style="{width: '50%'}"></el-input>
+                </el-form-item>
+                <el-form-item label="privateKeys" prop="privateKeysStorePath">
+                    <el-upload ref="privateKeysStorePath" v-model="formData.privateKeysStorePath" :file-list="privateKeysfileList" :action="privateKeysAction"
+                               :before-upload="privateKeysBeforeUpload" :on-success="handlePrivateKeysSuccess"
+                               :limit="1" :on-exceed="handleExceed" accept=".keystore">
+                        <el-button size="small" type="primary" icon="el-icon-upload">点击上传</el-button>
+                        <div slot="tip" class="el-upload__tip">只能上传不超过 10MB 的.keystore件</div>
+                    </el-upload>
+                </el-form-item>
+                <el-form-item label="issuedTime" prop="issuedTime">
+                    <el-date-picker type="datetime" v-model="formData.issuedTime" format="yyyy-MM-dd HH:mm:ss"
+                                    value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '50%'}" placeholder="请选择issuedTime" clearable>
+                    </el-date-picker>
+                </el-form-item>
+                <el-form-item label="expiryTime" prop="expiryTime">
+                    <el-date-picker type="datetime" v-model="formData.expiryTime" format="yyyy-MM-dd HH:mm:ss"
+                                    value-format="yyyy-MM-dd HH:mm:ss" :style="{width: '50%'}" placeholder="请选择expiryTime" clearable>
+                    </el-date-picker>
+                </el-form-item>
+                <el-form-item label="consumerType" prop="consumerType">
+                    <el-input v-model="formData.consumerType" placeholder="请输入consumerType（用户类型）" :maxlength="50" disabled
+                              show-word-limit clearable prefix-icon='el-icon-mobile' :style="{width: '50%'}"></el-input>
+                </el-form-item>
+                <el-form-item label="consumerAmount" prop="consumerAmount">
+                    <el-input-number v-model="formData.consumerAmount" placeholder="请输入consumerAmount（用户数）"></el-input-number>
+                </el-form-item>
+                <el-form-item label="description" prop="description">
+                    <el-input v-model="formData.description" type="textarea" placeholder="请输入description（描述）" show-word-limit
+                              :autosize="{minRows: 4, maxRows: 4}" :style="{width: '50%'}"></el-input>
+                </el-form-item>
+                <el-form-item label="ipAddress" prop="licenseCheckModel.ipAddress">
+                    <el-input v-model="formData.licenseCheckModel.ipAddress" placeholder="请输入ipAddress（受限IP地址，多个使用逗号分割）" :maxlength="50" show-word-limit
+                              clearable prefix-icon='el-icon-mobile' :style="{width: '50%'}"></el-input>
+                </el-form-item>
+                <el-form-item label="macAddress" prop="licenseCheckModel.macAddress">
+                    <el-input v-model="formData.licenseCheckModel.macAddress" placeholder="请输入macAddress（受限MAC地址，多个使用逗号分割）" :maxlength="50" show-word-limit
+                              clearable prefix-icon='el-icon-mobile' :style="{width: '50%'}"></el-input>
+                </el-form-item>
+                <el-form-item label="cpuSerial" prop="licenseCheckModel.cpuSerial">
+                    <el-input v-model="formData.licenseCheckModel.cpuSerial" placeholder="请输入cpuSerial（受限CPU系列号，多个使用逗号分割）" :maxlength="50" show-word-limit
+                              clearable prefix-icon='el-icon-mobile' :style="{width: '50%'}"></el-input>
+                </el-form-item>
+                <el-form-item label="mainBoardSerial" prop="licenseCheckModel.mainBoardSerial">
+                    <el-input v-model="formData.licenseCheckModel.mainBoardSerial" placeholder="请输入mainBoardSerial（受限主板序列号，多个使用逗号分割）" :maxlength="50"
+                              show-word-limit clearable prefix-icon='el-icon-mobile' :style="{width: '50%'}"></el-input>
+                </el-form-item>
+                <el-form-item size="large">
+                    <el-button type="primary" @click="submitForm">提交</el-button>
+                    <el-button @click="resetForm">重置</el-button>
+                </el-form-item>
+            </el-form>
+        </el-tab-pane>
+        <el-tab-pane label="查看结果" name="result">
+            <div>
+                <el-input v-model="resultText" type="textarea" placeholder="返回结果" show-word-limit
+                          :autosize="{minRows: 8, maxRows: 8}" :style="{width: '50%'}"></el-input>
+            </div>
+            <div>
+                <el-link :href="licenseLink" target="_blank" v-show="showDownloadLink">下载证书</el-link>
+            </div>
+        </el-tab-pane>
+    </el-tabs>
+</div>
+</body>
+
+<script type="module">
+    // import axios from 'axios';
+    // Vue.prototype.$axios = axios;
+
+    new Vue({
+        el:'#app',
+        data:{
+            visible: false,
+            showDownloadLink: false,
+            licenseLink: '',
+            activeName: 'gen',
+            resultText: '',
+            formData: {
+                subject: '',
+                privateAlias: '',
+                keyPass: '',
+                storePass: '',
+                privateKeysStorePath: null,
+                issuedTime: '2020-12-15 10:56:41',
+                expiryTime: '2020-12-15 10:56:41',
+                consumerType: 'User',
+                consumerAmount: 1,
+                description: undefined,
+                licenseCheckModel: {
+                    ipAddress: '',
+                    macAddress: '',
+                    cpuSerial: '',
+                    mainBoardSerial: ''
+                },
+            },
+            rules: {
+                subject: [{
+                    required: true,
+                    message: '请输入subject（标题）',
+                    trigger: 'blur'
+                }],
+                privateAlias: [{
+                    required: true,
+                    message: '请输入alias（别名）',
+                    trigger: 'blur'
+                }],
+                keyPass: [{
+                    required: true,
+                    message: '请输入keypass（私钥密码）',
+                    trigger: 'blur'
+                }],
+                storePass: [{
+                    required: true,
+                    message: '请输入storepass（库密码）',
+                    trigger: 'blur'
+                }],
+                privateKeysStorePath: [{
+                    required: true,
+                    message: '请输入privateKeys（私钥）',
+                    trigger: 'blur'
+                }],
+                issuedTime: [{
+                    required: true,
+                    message: '请选择issuedTime（生效时间）',
+                    trigger: 'change'
+                }],
+                expiryTime: [{
+                    required: true,
+                    message: '请选择expiryTime（失效时间）',
+                    trigger: 'change'
+                }],
+                consumerType: [{
+                    required: true,
+                    message: '请输入consumerType（自定义类型）',
+                    trigger: 'blur'
+                }],
+                consumerAmount: [{
+                    required: true,
+                    message: '请输入consumerAmount（自定义值）',
+                    trigger: 'blur'
+                }],
+                description: [{
+                    required: true,
+                    message: '请输入description（描述）',
+                    trigger: 'blur'
+                }],
+                'licenseCheckModel.ipAddress': [{
+                    required: true,
+                    message: '请输入ipAddress（受限IP地址，多个使用逗号分割）',
+                    trigger: 'blur'
+                }],
+                'licenseCheckModel.macAddress': [{
+                    required: true,
+                    message: '请输入macAddress（受限MAC地址，多个使用逗号分割）',
+                    trigger: 'blur'
+                }],
+                'licenseCheckModel.cpuSerial': [{
+                    required: true,
+                    message: '请输入cpuSerial（受限CPU序列号，多个使用逗号分割）',
+                    trigger: 'blur'
+                }],
+                'licenseCheckModel.mainBoardSerial': [{
+                    required: true,
+                    message: '请输入mainBoardSerial（受限主板序列号，多个使用逗号分割）',
+                    trigger: 'blur'
+                }],
+            },
+            privateKeysAction: '/license/upload/',
+            privateKeysfileList: [],
+        },
+        computed:{
+            msg(){
+                console.log("msg==");
+                return '789456';
+            }
+        },
+        methods:{
+            submitForm() {
+                this.showDownloadLink = false;
+                this.licenseLink = '';
+                this.resultText = '';
+                    this.$refs['elForm'].validate(valid => {
+                    if (!valid) return
+                    console.log("form:"+JSON.stringify(this.formData));
+                    let param = {
+                        subject: this.formData.subject,
+                        privateAlias: this.formData.privateAlias,
+                        keyPass: this.formData.keyPass,
+                        storePass: this.formData.storePass,
+                        privateKeysStorePath: this.formData.privateKeysStorePath,
+                        issuedTime: this.formData.issuedTime,
+                        expiryTime: this.formData.expiryTime,
+                        consumerType: this.formData.consumerType,
+                        consumerAmount: this.formData.consumerAmount,
+                        description: this.formData.description,
+                        licenseCheckModel: {
+                            ipAddress: this.formData.licenseCheckModel.ipAddress.split(","),
+                            macAddress: this.formData.licenseCheckModel.macAddress.split(","),
+                            cpuSerial: this.formData.licenseCheckModel.cpuSerial.split(","),
+                            mainBoardSerial: this.formData.licenseCheckModel.mainBoardSerial.split(","),
+                        },
+                    }
+                    console.log("提交表单:"+JSON.stringify(param));
+                    axios.post('/license/generate',param).then((response) => {
+                        this.resultText = JSON.stringify(response.data);
+                        if (response.data.result === 'ok') {
+                            this.licenseLink = '/license/download?fileName='+response.data.msg.licensePath;
+                            this.showDownloadLink = true;
+                        }
+                        this.activeName = 'result';
+                    }).catch((response) => {
+                        console.log(response.error)
+                        this.resultText = JSON.stringify(response);
+                    })
+                })
+            },
+            resetForm() {
+                this.$refs['elForm'].resetFields()
+            },
+            handlePrivateKeysSuccess(res, file) {
+                this.formData.privateKeysStorePath = this.privateKeysStorePath = res.msg;
+                console.log(this.formData.privateKeysStorePath);
+            },
+            handleExceed(files, fileList) {
+                this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+            },
+            privateKeysBeforeUpload(file) {
+                let isRightSize = file.size / 1024 / 1024 < 10
+                if (!isRightSize) {
+                    this.$message.error('文件大小超过 10MB')
+                }
+                let isAccept = new RegExp('.keystore').test(file.name)
+                if (!isAccept) {
+                    this.$message.error('应该选择.keystore类型的文件')
+                }
+                return isRightSize && isAccept;
+            },
+        },
+        beforeMount(){
+            console.log("挂载前生命周期");
+        },
+        mounted(){
+            console.log("挂载完成生命周期");
+        },
+        watch:{
+            'message'(){
+                console.log("监视器调用");
+            }
+        }
+    })
+</script>
+<style>
+    .el-upload-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        height: 27;
+    }
+</style>
+</html>
