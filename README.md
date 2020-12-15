@@ -78,8 +78,9 @@ ps. privateKeysStorePath需要先上传私钥文件获取文件id
 
 请求地址：`http://127.0.0.1:8080/gen`
 
+点击上传私钥
+
 ![截图3](/screenshot/3.jpg)
-![截图4](/screenshot/4.jpg)
 
 2. 通过RESTful接口：
 
@@ -88,6 +89,24 @@ POST http://127.0.0.1:8080/license/upload
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ![截图5](/screenshot/5.jpg)
+
+### 下载License文件
+
+1. 通过页面
+
+请求地址：`http://127.0.0.1:8080/gen`
+
+生成后点击下载证书
+
+![截图4](/screenshot/4.jpg)
+
+2. 通过RESTful接口：
+
+GET http://127.0.0.1:8080/license/download?fileName=f9ecda0677a84e9590824b9d57937106
+
+|属性名|属性值|
+|  ----  | ----  |
+|fileName|文件id|
 
 ## easyLicense-client
 
