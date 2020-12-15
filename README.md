@@ -27,13 +27,13 @@ Apache License Version 2.0
 
 请求地址：`http://127.0.0.1:8080/index`
 
-![截图1](/screenshot/1.jpg)
+<img width="450" alt="截图1" src="/screenshot/1.jpg"/>
 
 2. 通过RESTful接口
 
 GET `http://127.0.0.1:8080/license/getServerInfos`
 
-![截图2](/screenshot/2.jpg)
+<img width="450" alt="截图2" src="/screenshot/2.jpg"/>
 
 ### 生成证书 ：
 
@@ -41,8 +41,8 @@ GET `http://127.0.0.1:8080/license/getServerInfos`
 
 请求地址：`http://127.0.0.1:8080/gen`
 
-![截图3](/screenshot/3.jpg)
-![截图4](/screenshot/4.jpg)
+<img width="450" alt="截图3" src="/screenshot/3.jpg"/>
+<img width="450" alt="截图4" src="/screenshot/4.jpg"/>
 
 2. 通过RESTful接口
 
@@ -80,7 +80,7 @@ ps. privateKeysStorePath需要先上传私钥文件获取文件id
 
 点击上传私钥
 
-![截图3](/screenshot/3.jpg)
+<img width="450" alt="截图3" src="/screenshot/3.jpg"/>
 
 2. 通过RESTful接口：
 
@@ -98,7 +98,7 @@ Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0g
 
 生成后点击下载证书
 
-![截图4](/screenshot/4.jpg)
+<img width="450" alt="截图4" src="/screenshot/4.jpg"/>
 
 2. 通过RESTful接口：
 
