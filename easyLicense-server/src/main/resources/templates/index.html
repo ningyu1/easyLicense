@@ -1,0 +1,71 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html;charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>首页</title>
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <link href="/static/jquery.jsonview.css" rel="stylesheet">
+    <script src="/static/jquery.jsonview.js"></script>
+</head>
+<body>
+<h2>服务器信息</h2>
+<button id="collapse-btn">Collapse</button>
+<button id="expand-btn">Expand</button>
+<button id="toggle-btn">Toggle</button>
+<button id="toggle-level1-btn">Toggle level1</button>
+<button id="toggle-level2-btn">Toggle level2</button>
+<pre id="json"></pre>
+<p>
+<li>ipAddress：服务器IPv4地址</li>
+<li>macAddress：服务器MAC地址</li>
+<li>cpuSerial：服务器CPU序列号</li>
+<li>mainBoardSerial：服务器主板序列号</li>
+</p>
+</body>
+<style>
+    pre {
+        display: block;
+        padding: 9.5px;
+        margin: 0 0 10px;
+        font-size: 13px;
+        line-height: 1.42857143;
+        color: #333;
+        word-break: break-all;
+        word-wrap: break-word;
+        background-color: #f5f5f5;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+</style>
+<script type="text/javascript">
+    var json = {};
+    $(function() {
+        //$("#json").JSONView(json);
+
+        $.get("/license/getServerInfos", function(result){
+            $("#json").JSONView(result);
+        });
+
+        $('#collapse-btn').on('click', function() {
+            $('#json').JSONView('collapse');
+        });
+
+        $('#expand-btn').on('click', function() {
+            $('#json').JSONView('expand');
+        });
+
+        $('#toggle-btn').on('click', function() {
+            $('#json').JSONView('toggle');
+        });
+
+        $('#toggle-level1-btn').on('click', function() {
+            $('#json').JSONView('toggle', 1);
+        });
+
+        $('#toggle-level2-btn').on('click', function() {
+            $('#json').JSONView('toggle', 2);
+        });
+    });
+</script>
+</html>
