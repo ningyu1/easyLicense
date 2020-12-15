@@ -55,27 +55,31 @@ public class LicenseCreatorController {
      * @param param 生成证书需要的参数
      * <p>
      * {
-     *     "subject": "subjectName",
-     *     "privateAlias": "privateKey",
-     *     "keyPass": "5T7Zz5Y0dJFcqTxvzkH5LDGJJSGMzQ",
-     *     "storePass": "3538cef8e7",
-     *     "privateKeysStorePath": "上传后的文件id",
-     *     "issuedTime": "2020-04-26 14:48:12",
-     *     "expiryTime": "2020-12-31 00:00:00",
+     *     "subject": "SUBJECT",
+     *     "privateAlias": "alias",
+     *     "keyPass": "12345678",
+     *     "storePass": "87654321",
+     *     "privateKeysStorePath": "f2a67dbac33040018d9247b43357a3f8",
+     *     "issuedTime": "2018-07-10 00:00:01",
+     *     "expiryTime": "2020-12-04 18:59:59",
      *     "consumerType": "User",
      *     "consumerAmount": 1,
      *     "description": "这是证书描述信息",
      *     "licenseCheckModel": {
      *         "ipAddress": [
-     *             "192.168.245.1",
+     *             "192.168.8.63",
      *             "10.0.5.22"
      *         ],
      *         "macAddress": [
-     *             "00-50-56-C0-00-01",
+     *             "a4:83:e7:5a:5e:64",
      *             "50-7B-9D-F9-18-41"
      *         ],
-     *         "cpuSerial": "BFEBFBFF000406E3",
-     *         "mainBoardSerial": "L1HF65E00X9"
+     *         "cpuSerial": [
+     *             "BFEBFBFF000806EAXX"
+     *         ],
+     *         "mainBoardSerial": [
+     *             "FVFZ2E0HL41020"
+     *         ]
      *     }
      * }
      * </p>

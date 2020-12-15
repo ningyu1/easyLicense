@@ -52,22 +52,32 @@ Content-Type: application/json
 
 ```json
 {
-	"subject": "SYSHLANG_LICENSE",
-	"privateAlias": "alias",
-	"keyPass": "12345A67",
-	"storePass": "12345A67",
-	"privateKeysStorePath": "f2a67dbac33040018d9247b43357a3f8",
-	"issuedTime": "2018-07-10 00:00:01",
-	"expiryTime": "2020-12-04 18:59:59",
-	"consumerType": "User",
-	"consumerAmount": 1,
-	"description": "这是证书描述信息",
-	"licenseCheckModel": {
-		"ipAddress": ["192.168.8.63", "10.0.5.22"],
-		"macAddress": ["a4:83:e7:5a:5e:64", "50-7B-9D-F9-18-41"],
-		"cpuSerial": ["BFEBFBFF000806EA"],
-		"mainBoardSerial": ["FVFZ2E0HL410"]
-	}
+    "subject": "SUBJECT",
+    "privateAlias": "alias",
+    "keyPass": "12345678",
+    "storePass": "87654321",
+    "privateKeysStorePath": "f2a67dbac33040018d9247b43357a3f8",
+    "issuedTime": "2018-07-10 00:00:01",
+    "expiryTime": "2020-12-04 18:59:59",
+    "consumerType": "User",
+    "consumerAmount": 1,
+    "description": "这是证书描述信息",
+    "licenseCheckModel": {
+        "ipAddress": [
+            "192.168.8.63",
+            "10.0.5.22"
+        ],
+        "macAddress": [
+            "a4:83:e7:5a:5e:64",
+            "50-7B-9D-F9-18-41"
+        ],
+        "cpuSerial": [
+            "BFEBFBFF000806EAXX"
+        ],
+        "mainBoardSerial": [
+            "FVFZ2E0HL41020"
+        ]
+    }
 }
 ```
 ps. privateKeysStorePath需要先上传私钥文件获取文件id
