@@ -1,6 +1,6 @@
 package io.ningyu.config;
 
-import io.ningyu.license.verify.LicenseCheckInterceptor;
+import io.ningyu.verify.LicenseCheckInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;

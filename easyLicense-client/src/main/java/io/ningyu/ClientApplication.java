@@ -6,6 +6,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.PropertySource;
 
+/**
+ * Client启动类
+ *
+ * @author jiuye
+ */
 @SpringBootApplication
 @ServletComponentScan
 public class ClientApplication {

@@ -159,7 +159,7 @@ public class CustomLicenseManager extends LicenseManager{
                 throw new LicenseContentException("当前服务器的CPU序列号没在授权范围内");
             }
         }else{
-            throw new LicenseContentException("不能获取服务器硬件信息");
+            throw new LicenseContentException("没有读到有效的授权信息");
         }
     }
 

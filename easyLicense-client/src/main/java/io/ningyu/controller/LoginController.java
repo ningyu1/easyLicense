@@ -11,19 +11,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 登录
- * @author zifangsky
- * @date 2018/7/9
- * @since 1.0.0
+ * 模拟登录
+ * @author ningyu
  */
 @Controller
 public class LoginController {
 
     /**
      * 模拟登录验证
-     * @author zifangsky
-     * @date 2018/7/9 17:09
-     * @since 1.0.0
      * @param username 用户名
      * @param password 密码
      * @return java.util.Map<java.lang.String,java.lang.Object>
@@ -43,9 +38,6 @@ public class LoginController {
 
     /**
      * 用户首页
-     * @author zifangsky
-     * @date 2018/7/9 17:10
-     * @since 1.0.0
      * @return java.lang.String
      */
     @RequestMapping("/userIndex")

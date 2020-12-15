@@ -3,6 +3,7 @@ package io.ningyu.license.verify;
 import de.schlichtherle.license.*;
 import io.ningyu.license.CustomKeyStoreParam;
 import io.ningyu.license.LicenseManagerHolder;
+import io.ningyu.utils.ExceptionHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -36,7 +37,8 @@ public class LicenseVerify {
             result = licenseManager.install(new File(param.getLicensePath()));
             logger.info(MessageFormat.format("证书安装成功，证书有效期：{0} - {1}",format.format(result.getNotBefore()),format.format(result.getNotAfter())));
         }catch (Exception e){
-            logger.error("证书安装失败！",e);
+            //这里不输出失败的具体原因
+            logger.error("证书安装失败！原因：{}", ExceptionHandler.handle(e));
         }
 
         return result;
@@ -54,12 +56,11 @@ public class LicenseVerify {
         //2. 校验证书
         try {
             LicenseContent licenseContent = licenseManager.verify();
-//            System.out.println(licenseContent.getSubject());
-
-            logger.info(MessageFormat.format("证书校验通过，证书有效期：{0} - {1}",format.format(licenseContent.getNotBefore()),format.format(licenseContent.getNotAfter())));
+            logger.info(MessageFormat.format("证书校验通过，许可证有效期：{0} - {1}",format.format(licenseContent.getNotBefore()),format.format(licenseContent.getNotAfter())));
             return true;
         }catch (Exception e){
-            logger.error("证书校验失败！",e);
+            //这里不输出失败的具体原因
+            logger.error("证书校验失败！原因：{}", ExceptionHandler.handle(e));
             return false;
         }
     }
