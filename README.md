@@ -3,9 +3,12 @@
 ## 项目介绍
 使用 `TrueLicense `生成和验证`License证书`（服务器许可）
 
+## 开源许可
+Apache License Version 2.0
+
 ## 技术依赖
 * `Spring Boot`：项目基础架构
-* `TrueLicense `：基于`Java`实现的生成和验证服务器许可的简单框架
+* `TrueLicense`：基于`Java`实现的生成和验证服务器许可的简单框架
 
 ## 环境依赖
 * `JDK8+`
@@ -24,13 +27,13 @@
 
 请求地址：`http://127.0.0.1:8080/index`
 
-![截图1](/screenshot/1.png)
+![截图1](/screenshot/1.jpg)
 
 2. 通过RESTful接口
 
 GET `http://127.0.0.1:8080/license/getServerInfos`
 
-![截图2](/screenshot/2.png)
+![截图2](/screenshot/2.jpg)
 
 ### 生成证书 ：
 
@@ -38,12 +41,13 @@ GET `http://127.0.0.1:8080/license/getServerInfos`
 
 请求地址：`http://127.0.0.1:8080/gen`
 
-![截图3](/screenshot/3.png)
-![截图4](/screenshot/4.png)
+![截图3](/screenshot/3.jpg)
+![截图4](/screenshot/4.jpg)
 
 2. 通过RESTful接口
 
 POST http://127.0.0.1:8080/license/generate 
+
 Content-Type: application/json
 
 ```json
@@ -74,15 +78,16 @@ ps. privateKeysStorePath需要先上传私钥文件获取文件id
 
 请求地址：`http://127.0.0.1:8080/gen`
 
-![截图3](/screenshot/3.png)
-![截图4](/screenshot/4.png)
+![截图3](/screenshot/3.jpg)
+![截图4](/screenshot/4.jpg)
 
 2. 通过RESTful接口：
 
 POST http://127.0.0.1:8080/license/upload
+
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
-![截图5](/screenshot/5.png)
+![截图5](/screenshot/5.jpg)
 
 ## easyLicense-client
 
