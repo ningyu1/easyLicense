@@ -1,6 +1,5 @@
 package io.ningyu.config;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -24,31 +23,26 @@ public class EasyLicenseConfig {
     /**
      * 证书subject
      */
-    @Value("${easy-license.subject}")
     private String subject;
 
     /**
      * 公钥别称
      */
-    @Value("${easy-license.publicAlias}")
     private String publicAlias;
 
     /**
      * 访问公钥库的密码
      */
-    @Value("${easy-license.storePass}")
     private String storePass;
 
     /**
      * 证书位置
      */
-    @Value("${easy-license.licensePath}")
     private String licensePath;
 
     /**
      * 密钥库存储路径
      */
-    @Value("${easy-license.publicKeysStorePath}")
     private String publicKeysStorePath;
 
     public String getName()
