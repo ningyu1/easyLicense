@@ -202,22 +202,6 @@ public class Demo() {
         param.setPublicKeysStorePath("publicKeyPath");
         LicenseVerify.install(param);
     }
-    
-    /**
-     * 生成证书
-     */
-    public static boolean verify() {
-        boolean verifyResult = LicenseVerify.verify();
-        if(verifyResult){
-            return true;
-        }else{
-            response.setCharacterEncoding("utf-8");
-            Map<String,String> result = new HashMap<>(1);
-            result.put("result","您的证书无效，请核查服务器是否取得授权或重新申请证书！");
-            response.getWriter().write(JSON.toJSONString(result));
-            return false;
-        }
-    }
 }
 ```
 
