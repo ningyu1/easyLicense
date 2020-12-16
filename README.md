@@ -142,3 +142,107 @@ keytool -import -alias "alias" -file "certfile.cer" -keystore "publicCerts.keyst
 ```
 
 ps. `TrueLicense`对密码格式有要求，必须包含数字和字母
+
+## 集成到项目中使用
+
+1. 引入easylicense-core依赖
+
+```xml
+<dependency>
+	<groupId>io.ningyu</groupId>
+	<artifactId>easyLicense-core</artifactId>
+	<version>1.0.0</version>
+</dependency>
+```
+
+2. 生成证书
+
+```java
+public class Demo() {
+
+    /**
+     * 生成证书
+     */
+    public static void generate() throws Exception {
+        LicenseCreatorParam param = new LicenseCreatorParam();
+        param.setSubject("主题");
+        param.setAlias("别名");
+        param.setKeypass("密码");
+        param.setStorepass("密钥访问密码");
+        param.setPrivateKeysStorePath("私钥路径");
+        param.setIssuedTime("授权生效日期");
+        param.setExpiryTime("授权过期日期");
+        param.setConsumerType("固定User");
+        param.setConsumerAmount(1);//固定1
+        param.setDescription("许可证说明");
+        param.setIpAddress("10.0.0.1");//多个ip使用英文逗号分割
+        param.setMacAddress("a4:83:e7:5a:5e:64");//多个mac使用英文逗号分割
+        param.setCpuSerial("BFEBFBFF000806EB");//多个cpu序列号使用英文逗号分割
+        param.setMainBoardSerial("FVFZ2E0HL411");//多个主板序列号使用英文逗号分割
+        LicenseCreator licenseCreator = new LicenseCreator(param);
+        boolean result = licenseCreator.generateLicense();
+    }
+}
+```
+
+3. 安装证书
+
+```java
+public class Demo() {
+
+    /**
+     * 安装证书
+     */
+    public static void install() throws Exception {
+        LicenseVerifyParam param = new LicenseVerifyParam();
+        param.setSubject("subject");
+        param.setAlias("alias");
+        param.setStorePass("storePass");
+        param.setLicensePath("licensePath");
+        param.setPublicKeysStorePath("publicKeyPath");
+        LicenseVerify.install(param);
+    }
+    
+    /**
+     * 生成证书
+     */
+    public static boolean verify() {
+        boolean verifyResult = LicenseVerify.verify();
+        if(verifyResult){
+            return true;
+        }else{
+            response.setCharacterEncoding("utf-8");
+            Map<String,String> result = new HashMap<>(1);
+            result.put("result","您的证书无效，请核查服务器是否取得授权或重新申请证书！");
+            response.getWriter().write(JSON.toJSONString(result));
+            return false;
+        }
+    }
+}
+```
+
+4. 验证证书
+
+```java
+public class Demo() {
+
+    /**
+     * 验证证书
+     */
+    public static boolean verify() {
+        boolean verifyResult = LicenseVerify.verify();
+        if(verifyResult){
+            return true;
+        }else{
+            response.setCharacterEncoding("utf-8");
+            Map<String,String> result = new HashMap<>(1);
+            result.put("result","您的证书无效，请核查服务器是否取得授权或重新申请证书！");
+            response.getWriter().write(JSON.toJSONString(result));
+            return false;
+        }
+    }
+}
+```
+
+
+

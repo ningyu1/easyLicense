@@ -26,7 +26,7 @@ public class LicenseVerify {
      * 安装License证书
      * @author ningyu
      */
-    public static synchronized LicenseContent install(LicenseVerifyParam param){
+    public static synchronized LicenseContent install(LicenseVerifyParam param) {
         LicenseContent result = null;
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 

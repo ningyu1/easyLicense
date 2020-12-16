@@ -105,8 +105,7 @@ public class CustomLicenseManager extends LicenseManager {
      */
     protected synchronized void validateCreate(final LicenseContent content)
             throws LicenseContentException {
-        final LicenseParam param = getLicenseParam();
-
+        super.validate(content);
         final Date now = new Date();
         final Date notBefore = content.getNotBefore();
         final Date notAfter = content.getNotAfter();
