@@ -15,9 +15,9 @@ Apache License Version 2.0
 
 ## 两个子项目说明
 
-- `easyLicense-client`: 验证`License证书`
+- `easyLicense-client`: 验证`License证书`demo
 - `easyLicense-core`: 证书核心
-- `easyLicense-server`: 生成`License证书`
+- `easyLicense-server`: 生成`License证书`demo
 
 ## easyLicense-server
 
