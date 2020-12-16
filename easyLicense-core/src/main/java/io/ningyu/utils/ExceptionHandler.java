@@ -18,7 +18,6 @@ public class ExceptionHandler {
         String defaultMessage = "您的证书无效，请核查服务器是否取得授权或重新申请证书！";
         if (e instanceof BadPaddingException
                 || e instanceof IllegalPasswordException
-                || e instanceof LicenseContentException
                 || e instanceof LicenseNotaryException
                 || e instanceof NoLicenseInstalledException) {
             return defaultMessage;

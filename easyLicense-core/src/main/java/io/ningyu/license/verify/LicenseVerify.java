@@ -19,13 +19,14 @@ import java.util.prefs.Preferences;
  * @author ningyu
  */
 public class LicenseVerify {
+
     private static Logger logger = LogManager.getLogger(LicenseVerify.class);
 
     /**
      * 安装License证书
      * @author ningyu
      */
-    public synchronized LicenseContent install(LicenseVerifyParam param){
+    public static synchronized LicenseContent install(LicenseVerifyParam param){
         LicenseContent result = null;
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -49,7 +50,7 @@ public class LicenseVerify {
      * @author ningyu
      * @return boolean
      */
-    public boolean verify(){
+    public static boolean verify(){
         LicenseManager licenseManager = LicenseManagerHolder.getInstance(null);
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -68,10 +69,9 @@ public class LicenseVerify {
     /**
      * 初始化证书生成参数
      * @author ningyu
-     * @param param License校验类需要的参数
      * @return de.schlichtherle.license.LicenseParam
      */
-    private LicenseParam initLicenseParam(LicenseVerifyParam param){
+    private static LicenseParam initLicenseParam(LicenseVerifyParam param){
         Preferences preferences = Preferences.userNodeForPackage(LicenseVerify.class);
 
         CipherParam cipherParam = new DefaultCipherParam(param.getStorePass());

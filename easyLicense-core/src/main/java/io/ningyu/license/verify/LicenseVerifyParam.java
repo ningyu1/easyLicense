@@ -11,6 +11,7 @@ import java.io.Serializable;
  */
 public class LicenseVerifyParam extends BaseLicenseParam implements Serializable {
 
+    private static final long serialVersionUID = 2944688925668423875L;
     /**
      * 密钥库存储路径
      */

@@ -65,12 +65,10 @@ public class LicenseCreator {
                 ,param.getStorePass()
                 ,param.getKeyPass());
 
-        LicenseParam licenseParam = new DefaultLicenseParam(param.getSubject()
+        return new DefaultLicenseParam(param.getSubject()
                 ,preferences
                 ,privateStoreParam
                 ,cipherParam);
-
-        return licenseParam;
     }
 
     /**

@@ -18,7 +18,8 @@ import java.util.List;
  *
  * @author ningyu
  */
-public class CustomLicenseManager extends LicenseManager{
+public class CustomLicenseManager extends LicenseManager {
+
     private static Logger logger = LogManager.getLogger(CustomLicenseManager.class);
 
     //XML编码

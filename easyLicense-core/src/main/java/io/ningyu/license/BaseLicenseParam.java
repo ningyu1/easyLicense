@@ -9,6 +9,8 @@ import java.io.Serializable;
  */
 public class BaseLicenseParam implements Serializable {
 
+    private static final long serialVersionUID = 4365403351071789571L;
+
     public BaseLicenseParam() {
     }
 

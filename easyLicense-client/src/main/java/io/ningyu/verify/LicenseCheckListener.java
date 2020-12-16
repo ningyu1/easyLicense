@@ -37,9 +37,8 @@ public class LicenseCheckListener implements ApplicationListener<ContextRefreshe
                 param.setStorePass(easyLicenseConfig.getStorePass());
                 param.setLicensePath(easyLicenseConfig.getLicensePath());
                 param.setPublicKeysStorePath(easyLicenseConfig.getPublicKeysStorePath());
-                LicenseVerify licenseVerify = new LicenseVerify();
                 //安装证书
-                licenseVerify.install(param);
+                LicenseVerify.install(param);
                 logger.info("++++++++ 证书安装结束 ++++++++");
             }
         }

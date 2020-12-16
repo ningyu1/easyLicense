@@ -21,11 +21,8 @@ public class LicenseCheckInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        LicenseVerify licenseVerify = new LicenseVerify();
-
         //校验证书是否有效
-        boolean verifyResult = licenseVerify.verify();
-
+        boolean verifyResult = LicenseVerify.verify();
         if(verifyResult){
             return true;
         }else{
