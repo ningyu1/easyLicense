@@ -124,16 +124,21 @@ GET http://127.0.0.1:8080/license/download?fileName=f9ecda0677a84e9590824b9d5793
 
 ### 生成命令
 ```shell script
-keytool -genkeypair -keysize 1024 -validity 3650 -alias "alias" -keystore "privateKeys.keystore" -storepass "12345678" -keypass "12345678" -dname "CN=localhost, OU=localhost, O=localhost, L=SH, ST=SH, C=CN"
+keytool -genkeypair -keysize 1024 -validity 3650 -alias "alias" -keystore "privateKeys.keystore" -storepass "123456a" -keypass "123456a" -dname "CN=localhost, OU=localhost, O=localhost, L=SH, ST=SH, C=CN"
 ```
+
+ps. `TrueLicense`对密码格式有要求，必须包含数字和字母
 
 ### 导出命令
 ```shell script
-keytool -exportcert -alias "alias" -keystore "privateKeys.keystore" -storepass "12345678" -file "certfile.cer"
+keytool -exportcert -alias "alias" -keystore "privateKeys.keystore" -storepass "123456a" -file "certfile.cer"
 ```
+
+ps. `TrueLicense`对密码格式有要求，必须包含数字和字母
 
 ### 导入命令
 ```shell script
-keytool -import -alias "alias" -file "certfile.cer" -keystore "publicCerts.keystore" -storepass "12345678"
+keytool -import -alias "alias" -file "certfile.cer" -keystore "publicCerts.keystore" -storepass "123456a"
 ```
 
+ps. `TrueLicense`对密码格式有要求，必须包含数字和字母

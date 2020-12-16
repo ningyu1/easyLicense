@@ -117,8 +117,8 @@
                 keyPass: '',
                 storePass: '',
                 privateKeysStorePath: null,
-                issuedTime: '2020-12-15 10:56:41',
-                expiryTime: '2020-12-15 10:56:41',
+                issuedTime: undefined,
+                expiryTime: undefined,
                 consumerType: 'User',
                 consumerAmount: 1,
                 description: undefined,
@@ -247,6 +247,7 @@
                     }).catch((response) => {
                         console.log(response.error)
                         this.resultText = JSON.stringify(response);
+                        this.activeName = 'result';
                     })
                 })
             },
