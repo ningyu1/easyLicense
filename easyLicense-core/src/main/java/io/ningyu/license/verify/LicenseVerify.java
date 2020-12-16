@@ -78,7 +78,7 @@ public class LicenseVerify {
 
         KeyStoreParam publicStoreParam = new CustomKeyStoreParam(LicenseVerify.class
                 ,param.getPublicKeysStorePath()
-                ,param.getPublicAlias()
+                ,param.getAlias()
                 ,param.getStorePass()
                 ,null);
 

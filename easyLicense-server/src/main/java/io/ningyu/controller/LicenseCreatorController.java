@@ -2,8 +2,8 @@ package io.ningyu.controller;
 
 import io.ningyu.config.EasyLicenseConfig;
 import io.ningyu.license.LicenseCheckModel;
-import io.ningyu.license.LicenseCreator;
-import io.ningyu.license.LicenseCreatorParam;
+import io.ningyu.license.creator.LicenseCreator;
+import io.ningyu.license.creator.LicenseCreatorParam;
 import io.ningyu.utils.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

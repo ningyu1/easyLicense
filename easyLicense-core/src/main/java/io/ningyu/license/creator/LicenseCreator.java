@@ -1,4 +1,4 @@
-package io.ningyu.license;
+package io.ningyu.license.creator;
 
 import de.schlichtherle.license.CipherParam;
 import de.schlichtherle.license.DefaultCipherParam;
@@ -7,6 +7,8 @@ import de.schlichtherle.license.KeyStoreParam;
 import de.schlichtherle.license.LicenseContent;
 import de.schlichtherle.license.LicenseManager;
 import de.schlichtherle.license.LicenseParam;
+import io.ningyu.license.CustomKeyStoreParam;
+import io.ningyu.license.CustomLicenseManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -59,7 +61,7 @@ public class LicenseCreator {
 
         KeyStoreParam privateStoreParam = new CustomKeyStoreParam(LicenseCreator.class
                 ,param.getPrivateKeysStorePath()
-                ,param.getPrivateAlias()
+                ,param.getAlias()
                 ,param.getStorePass()
                 ,param.getKeyPass());
 

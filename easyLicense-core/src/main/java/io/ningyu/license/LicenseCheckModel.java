@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author ningyu
  */
-public class LicenseCheckModel implements Serializable{
+public class LicenseCheckModel implements Serializable {
 
     private static final long serialVersionUID = 8600137500316662317L;
     /**
