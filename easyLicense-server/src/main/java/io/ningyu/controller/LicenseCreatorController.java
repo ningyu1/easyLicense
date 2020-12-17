@@ -4,18 +4,17 @@ import io.ningyu.config.EasyLicenseConfig;
 import io.ningyu.license.LicenseCheckModel;
 import io.ningyu.license.creator.LicenseCreator;
 import io.ningyu.license.creator.LicenseCreatorParam;
-import io.ningyu.utils.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.activation.MimetypesFileTypeMap;
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -157,22 +156,38 @@ public class LicenseCreatorController {
      * @throws IOException
      */
     @GetMapping(value = "download")
-    public void download(@RequestParam("fileName") String filename) throws IOException {
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletResponse response = requestAttributes.getResponse();
-        // 设置信息给客户端不解析
-        String type = new MimetypesFileTypeMap().getContentType("license.lic");
-        // 设置contenttype，即告诉客户端所发送的数据属于什么类型
-        response.setHeader("Content-type",type);
-        // 设置编码
-        String encode = new String("license.lic".getBytes("utf-8"), "iso-8859-1");
-        // 设置扩展头，当Content-Type 的类型为要下载的类型时 , 这个信息头会告诉浏览器这个文件的名字和类型。
-        response.setHeader("Content-Disposition", "attachment;filename=" + encode);
+    public ResponseEntity<InputStreamResource> download(@RequestParam("fileName") String filename) throws IOException {
+//        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+//        HttpServletResponse response = requestAttributes.getResponse();
+//        // 设置信息给客户端不解析
+//        String type = new MimetypesFileTypeMap().getContentType("license.lic");
+//        // 设置contenttype，即告诉客户端所发送的数据属于什么类型
+//        response.setHeader("Content-type",type);
+//        // 设置编码
+//        String encode = new String("license.lic".getBytes("utf-8"), "iso-8859-1");
+//        // 设置扩展头，当Content-Type 的类型为要下载的类型时 , 这个信息头会告诉浏览器这个文件的名字和类型。
+//        response.setHeader("Content-Disposition", "attachment;filename=" + encode);
+
+//        StringBuffer licensePath = new StringBuffer();
+//        licensePath.append(easyLicenseConfig.getTmp());
+//        licensePath.append(filename);
+//        FileUtil.download(licensePath.toString(), response);
 
         StringBuffer licensePath = new StringBuffer();
         licensePath.append(easyLicenseConfig.getTmp());
         licensePath.append(filename);
-        FileUtil.download(licensePath.toString(), response);
+        FileSystemResource file = new FileSystemResource(licensePath.toString());
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Content-Disposition", String.format("attachment; filename=\"%s\"", new String("license.lic".getBytes("utf-8"), "iso-8859-1")));
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentLength(file.contentLength())
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .body(new InputStreamResource(file.getInputStream()));
     }
 
 }
