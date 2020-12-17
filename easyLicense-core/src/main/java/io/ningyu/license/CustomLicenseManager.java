@@ -2,8 +2,8 @@ package io.ningyu.license;
 
 import de.schlichtherle.license.*;
 import de.schlichtherle.xml.GenericCertificate;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.beans.XMLDecoder;
 import java.io.BufferedInputStream;
@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class CustomLicenseManager extends LicenseManager {
 
-    private static Logger logger = LogManager.getLogger(CustomLicenseManager.class);
+    private static Logger logger = LoggerFactory.getLogger(CustomLicenseManager.class);
 
     //XML编码
     private static final String XML_CHARSET = "UTF-8";

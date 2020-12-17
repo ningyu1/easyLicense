@@ -1,16 +1,10 @@
 package io.ningyu.license.creator;
 
-import de.schlichtherle.license.CipherParam;
-import de.schlichtherle.license.DefaultCipherParam;
-import de.schlichtherle.license.DefaultLicenseParam;
-import de.schlichtherle.license.KeyStoreParam;
-import de.schlichtherle.license.LicenseContent;
-import de.schlichtherle.license.LicenseManager;
-import de.schlichtherle.license.LicenseParam;
+import de.schlichtherle.license.*;
 import io.ningyu.license.CustomKeyStoreParam;
 import io.ningyu.license.CustomLicenseManager;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.security.auth.x500.X500Principal;
 import java.io.File;
@@ -23,7 +17,7 @@ import java.util.prefs.Preferences;
  * @author ningyu
  */
 public class LicenseCreator {
-    private static Logger logger = LogManager.getLogger(LicenseCreator.class);
+    private static Logger logger = LoggerFactory.getLogger(LicenseCreator.class);
     private final static X500Principal DEFAULT_HOLDER_AND_ISSUER = new X500Principal("CN=localhost, OU=localhost, O=localhost, L=SH, ST=SH, C=CN");
     private LicenseCreatorParam param;
 

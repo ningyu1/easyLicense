@@ -4,8 +4,8 @@ import de.schlichtherle.license.*;
 import io.ningyu.license.CustomKeyStoreParam;
 import io.ningyu.license.LicenseManagerHolder;
 import io.ningyu.utils.ExceptionHandler;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -20,7 +20,7 @@ import java.util.prefs.Preferences;
  */
 public class LicenseVerify {
 
-    private static Logger logger = LogManager.getLogger(LicenseVerify.class);
+    private static Logger logger = LoggerFactory.getLogger(LicenseVerify.class);
 
     /**
      * 安装License证书
