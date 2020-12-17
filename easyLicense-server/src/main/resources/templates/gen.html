@@ -38,7 +38,7 @@
                 <el-form-item label="privateKeys" prop="privateKeysStorePath">
                     <el-upload ref="privateKeysStorePath" v-model="formData.privateKeysStorePath" :file-list="privateKeysfileList" :action="privateKeysAction"
                                :before-upload="privateKeysBeforeUpload" :on-success="handlePrivateKeysSuccess"
-                               :limit="1" :on-exceed="handleExceed" accept=".keystore">
+                               :limit="1" :on-exceed="handleExceed" accept=".keystore" :style="{width: '50%'}">
                         <el-button size="small" type="primary" icon="el-icon-upload">点击上传</el-button>
                         <div slot="tip" class="el-upload__tip">只能上传不超过 10MB 的.keystore件</div>
                     </el-upload>
@@ -65,20 +65,25 @@
                               :autosize="{minRows: 4, maxRows: 4}" :style="{width: '50%'}"></el-input>
                 </el-form-item>
                 <el-form-item label="ipAddress" prop="licenseCheckModel.ipAddress">
-                    <el-input v-model="formData.licenseCheckModel.ipAddress" placeholder="请输入ipAddress（受限IP地址，多个使用逗号分割）" :maxlength="50" show-word-limit
+                    <el-input v-model="formData.licenseCheckModel.ipAddress" placeholder="请输入IP地址（多个使用逗号分割）" :maxlength="50" show-word-limit
                               clearable prefix-icon='el-icon-mobile' :style="{width: '50%'}"></el-input>
+                    <el-tag type="warning" :style="{width: '50%'}">如不控制IP地址，请输入：* </el-tag>
                 </el-form-item>
-                <el-form-item label="macAddress" prop="licenseCheckModel.macAddress">
-                    <el-input v-model="formData.licenseCheckModel.macAddress" placeholder="请输入macAddress（受限MAC地址，多个使用逗号分割）" :maxlength="50" show-word-limit
-                              clearable prefix-icon='el-icon-mobile' :style="{width: '50%'}"></el-input>
+                <el-form-item label="macAddress" prop="licenseCheckModel.macAddress" :inline="true">
+                    <el-input v-model="formData.licenseCheckModel.macAddress" placeholder="请输入MAC地址（多个使用逗号分割）" :maxlength="50" show-word-limit
+                              clearable prefix-icon='el-icon-mobile' :style="{width: '50%'}">
+                    </el-input>
+                    <el-tag type="warning" :style="{width: '50%'}" >如不控制MAC地址，请输入：* </el-tag>
                 </el-form-item>
                 <el-form-item label="cpuSerial" prop="licenseCheckModel.cpuSerial">
-                    <el-input v-model="formData.licenseCheckModel.cpuSerial" placeholder="请输入cpuSerial（受限CPU系列号，多个使用逗号分割）" :maxlength="50" show-word-limit
+                    <el-input v-model="formData.licenseCheckModel.cpuSerial" placeholder="请输入CPU序列号（多个使用逗号分割）" :maxlength="50" show-word-limit
                               clearable prefix-icon='el-icon-mobile' :style="{width: '50%'}"></el-input>
+                    <el-tag type="warning" :style="{width: '50%'}" >如不控制CPU序列号，请输入：* </el-tag>
                 </el-form-item>
                 <el-form-item label="mainBoardSerial" prop="licenseCheckModel.mainBoardSerial">
-                    <el-input v-model="formData.licenseCheckModel.mainBoardSerial" placeholder="请输入mainBoardSerial（受限主板序列号，多个使用逗号分割）" :maxlength="50"
+                    <el-input v-model="formData.licenseCheckModel.mainBoardSerial" placeholder="请输入主板序列号（多个使用逗号分割）" :maxlength="50"
                               show-word-limit clearable prefix-icon='el-icon-mobile' :style="{width: '50%'}"></el-input>
+                    <el-tag type="warning" :style="{width: '50%'}" >如不控制主板序列号，请输入：* </el-tag>
                 </el-form-item>
                 <el-form-item size="large">
                     <el-button type="primary" @click="submitForm">提交</el-button>
@@ -182,22 +187,22 @@
                 }],
                 'licenseCheckModel.ipAddress': [{
                     required: true,
-                    message: '请输入ipAddress（受限IP地址，多个使用逗号分割）',
+                    message: '请输入IP地址（多个使用逗号分割）',
                     trigger: 'blur'
                 }],
                 'licenseCheckModel.macAddress': [{
                     required: true,
-                    message: '请输入macAddress（受限MAC地址，多个使用逗号分割）',
+                    message: '请输入MAC地址（多个使用逗号分割）',
                     trigger: 'blur'
                 }],
                 'licenseCheckModel.cpuSerial': [{
                     required: true,
-                    message: '请输入cpuSerial（受限CPU序列号，多个使用逗号分割）',
+                    message: '请输入CPU序列号（多个使用逗号分割）',
                     trigger: 'blur'
                 }],
                 'licenseCheckModel.mainBoardSerial': [{
                     required: true,
-                    message: '请输入mainBoardSerial（受限主板序列号，多个使用逗号分割）',
+                    message: '请输入主板序列号（多个使用逗号分割）',
                     trigger: 'blur'
                 }],
             },
@@ -230,10 +235,10 @@
                         consumerAmount: this.formData.consumerAmount,
                         description: this.formData.description,
                         licenseCheckModel: {
-                            ipAddress: this.formData.licenseCheckModel.ipAddress.split(","),
-                            macAddress: this.formData.licenseCheckModel.macAddress.split(","),
-                            cpuSerial: this.formData.licenseCheckModel.cpuSerial.split(","),
-                            mainBoardSerial: this.formData.licenseCheckModel.mainBoardSerial.split(","),
+                            ipAddress: this.structureModel(this.formData.licenseCheckModel.ipAddress),
+                            macAddress: this.structureModel(this.formData.licenseCheckModel.macAddress),
+                            cpuSerial: this.structureModel(this.formData.licenseCheckModel.cpuSerial),
+                            mainBoardSerial: this.structureModel(this.formData.licenseCheckModel.mainBoardSerial),
                         },
                     }
                     console.log("提交表单:"+JSON.stringify(param));
@@ -266,12 +271,15 @@
                 if (!isRightSize) {
                     this.$message.error('文件大小超过 10MB')
                 }
-                let isAccept = new RegExp('.keystore').test(file.name)
+                let isAccept = new RegExp('.keystore|.store').test(file.name);
                 if (!isAccept) {
-                    this.$message.error('应该选择.keystore类型的文件')
+                    this.$message.error('应该选择.keystore或.store类型的文件')
                 }
                 return isRightSize && isAccept;
             },
+            structureModel(value) {
+                return value === "*" ? ["*"] : value.split(",");
+            }
         },
         beforeMount(){
             console.log("挂载前生命周期");

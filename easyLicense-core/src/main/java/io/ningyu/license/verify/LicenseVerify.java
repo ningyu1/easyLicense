@@ -39,7 +39,7 @@ public class LicenseVerify {
             logger.info(MessageFormat.format("证书安装成功，证书有效期：{0} - {1}",format.format(result.getNotBefore()),format.format(result.getNotAfter())));
         }catch (Exception e){
             //这里不输出失败的具体原因
-            logger.error("证书安装失败！原因：{}", ExceptionHandler.handle(e));
+            logger.error("证书安装失败！原因：{}", ExceptionHandler.handle(e), e);
         }
 
         return result;

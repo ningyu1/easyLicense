@@ -1,0 +1,20 @@
+### 生成命令
+```shell script
+keytool -genkeypair -keysize 1024 -validity 3650 -alias "alias" -keystore "privateKeys.keystore" -storepass "123456a" -keypass "123456a" -dname "CN=localhost, OU=localhost, O=localhost, L=SH, ST=SH, C=CN"
+```
+
+ps. `TrueLicense`对密码格式有要求，必须包含数字和字母
+
+### 导出命令
+```shell script
+keytool -exportcert -alias "alias" -keystore "privateKeys.keystore" -storepass "123456a" -file "certfile.cer"
+```
+
+ps. `TrueLicense`对密码格式有要求，必须包含数字和字母
+
+### 导入命令
+```shell script
+keytool -import -alias "alias" -file "certfile.cer" -keystore "publicCerts.keystore" -storepass "123456a"
+```
+
+ps. `TrueLicense`对密码格式有要求，必须包含数字和字母

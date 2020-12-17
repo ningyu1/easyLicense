@@ -13,7 +13,7 @@ Apache License Version 2.0
 ## 环境依赖
 * `JDK8+`
 
-## 两个子项目说明
+## module说明
 
 - `easyLicense-client`: 验证`License证书`demo
 - `easyLicense-core`: 证书核心
@@ -120,28 +120,23 @@ GET http://127.0.0.1:8080/license/download?fileName=f9ecda0677a84e9590824b9d5793
 
 ## easyLicense-client
 
-## 生成证书
-
-### 生成命令
-```shell script
-keytool -genkeypair -keysize 1024 -validity 3650 -alias "alias" -keystore "privateKeys.keystore" -storepass "123456a" -keypass "123456a" -dname "CN=localhost, OU=localhost, O=localhost, L=SH, ST=SH, C=CN"
+* client是客户端使用的demo，修改`application.properties`
+```properties
+# 证书subject
+easy-license.subject=test
+# 公钥别称
+easy-license.publicAlias=alias
+# 访问公钥库的密码，`TrueLicense`对密码格式有要求，必须包含数字和字母
+easy-license.storePass=123456a
+# 证书位置
+easy-license.licensePath=/Volumes/D/javatools/workspace/github/easyLicense/cert/license.lic
+# 密钥库存储路径
+easy-license.publicKeysStorePath=/Volumes/D/javatools/workspace/github/easyLicense/cert/publicCerts.keystore
 ```
+* 运行`ClientApplication`启动客户端程序
+* 启动时进行证书安装可以查看：`io.ningyu.verify.LicenseCheckListener`
+* springmvc拦截器中进行证书校验查看：`io.ningyu.verify.LicenseCheckInterceptor`
 
-ps. `TrueLicense`对密码格式有要求，必须包含数字和字母
-
-### 导出命令
-```shell script
-keytool -exportcert -alias "alias" -keystore "privateKeys.keystore" -storepass "123456a" -file "certfile.cer"
-```
-
-ps. `TrueLicense`对密码格式有要求，必须包含数字和字母
-
-### 导入命令
-```shell script
-keytool -import -alias "alias" -file "certfile.cer" -keystore "publicCerts.keystore" -storepass "123456a"
-```
-
-ps. `TrueLicense`对密码格式有要求，必须包含数字和字母
 
 ## 集成到项目中使用
 
@@ -227,6 +222,33 @@ public class Demo() {
     }
 }
 ```
+
+## 使用keytool生成密钥对
+
+以下命令在dos命令行执行，注意当前执行目录，最后生成的密钥对即在该目录下：
+
+1. 首先要用KeyTool工具来生成私匙库：（-alias别名 –validity 3650表示10年有效）
+```shell script
+keytool -genkey -keysize 1024 -alias privatekey -keystore privateKeys.keystore -storepass "123456a" -keypass "123456a" -validity 3650 -dname "CN=localhost, OU=localhost, O=localhost, L=SH, ST=SH, C=CN"
+```
+ps.`-keysize`默认为2048，应该使用`-keysize 1024`，使用默认值太大会出现如下错误：
+```
+java.security.InvalidKeyException: The security strength of SHA-1 digest algorithm is not sufficient for this key size
+```
+
+2. 然后把私匙库内的公匙导出到一个文件当中：
+```shell script
+keytool -export -alias privatekey -file certfile.cer -keystore privateKeys.keystore -storepass "123456a"
+```
+
+3. 然后再把这个证书文件导入到公匙库：
+```shell script
+keytool -import -alias publiccert -file certfile.cer -keystore publicCerts.keystore -storepass "123456a"
+```
+
+4. 最后生成文件privateKeys.store、publicCerts.store拷贝出来备用。
+
+ps. `TrueLicense`对密码格式有要求，必须包含数字和字母
 
 
 
