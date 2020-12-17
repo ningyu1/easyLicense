@@ -26,6 +26,8 @@ public class CustomLicenseManager extends LicenseManager {
     //默认BUFSIZE
     private static final int DEFAULT_BUFSIZE = 8 * 1024;
 
+    private static volatile LicenseCheckModel SERVER_INFOS = null;
+
     public CustomLicenseManager() {
 
     }
@@ -207,9 +209,15 @@ public class CustomLicenseManager extends LicenseManager {
      * @return LicenseCheckModel
      */
     private LicenseCheckModel getServerInfos() {
-        LicenseCheckModel licenseCheckModel = new LicenseCheckModel();
-        licenseCheckModel.copyTo();
-        return licenseCheckModel;
+        if(SERVER_INFOS == null){
+            synchronized (CustomLicenseManager.class){
+                if(SERVER_INFOS == null){
+                    SERVER_INFOS = new LicenseCheckModel();
+                    SERVER_INFOS.copyTo();
+                }
+            }
+        }
+        return SERVER_INFOS;
     }
 
     /**
