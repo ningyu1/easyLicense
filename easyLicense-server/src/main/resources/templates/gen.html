@@ -67,22 +67,22 @@
                 <el-form-item label="ipAddress" prop="licenseCheckModel.ipAddress">
                     <el-input v-model="formData.licenseCheckModel.ipAddress" type="textarea" placeholder="请输入IP地址（多个使用逗号分割）" show-word-limit
                               :autosize="{minRows: 4, maxRows: 4}" :style="{width: '50%'}"></el-input>
-                    <el-tag type="warning" :style="{width: '50%'}">如不控制IP地址，请输入：* </el-tag>
+                    <el-tag type="warning" :style="{width: '50%'}">如不控制IP地址请输入：* ，控制某个ip段请输入：10.5.0.* 或 10.5.*.1</el-tag>
                 </el-form-item>
                 <el-form-item label="macAddress" prop="licenseCheckModel.macAddress" :inline="true">
                     <el-input v-model="formData.licenseCheckModel.macAddress" type="textarea" placeholder="请输入MAC地址（多个使用逗号分割）" show-word-limit
                               :autosize="{minRows: 4, maxRows: 4}" :style="{width: '50%'}"></el-input>
-                    <el-tag type="warning" :style="{width: '50%'}" >如不控制MAC地址，请输入：* </el-tag>
+                    <el-tag type="warning" :style="{width: '50%'}" >如不控制MAC地址请输入：* </el-tag>
                 </el-form-item>
                 <el-form-item label="cpuSerial" prop="licenseCheckModel.cpuSerial">
                     <el-input v-model="formData.licenseCheckModel.cpuSerial" type="textarea" placeholder="请输入CPU序列号（多个使用逗号分割）" show-word-limit
                               :autosize="{minRows: 4, maxRows: 4}" :style="{width: '50%'}"></el-input>
-                    <el-tag type="warning" :style="{width: '50%'}" >如不控制CPU序列号，请输入：* </el-tag>
+                    <el-tag type="warning" :style="{width: '50%'}" >如不控制CPU序列号请输入：* </el-tag>
                 </el-form-item>
                 <el-form-item label="mainBoardSerial" prop="licenseCheckModel.mainBoardSerial">
                     <el-input v-model="formData.licenseCheckModel.mainBoardSerial" type="textarea" placeholder="请输入主板序列号（多个使用逗号分割）" show-word-limit
                               :autosize="{minRows: 4, maxRows: 4}" :style="{width: '50%'}"></el-input>
-                    <el-tag type="warning" :style="{width: '50%'}" >如不控制主板序列号，请输入：* </el-tag>
+                    <el-tag type="warning" :style="{width: '50%'}" >如不控制主板序列号请输入：* </el-tag>
                 </el-form-item>
                 <el-form-item size="large">
                     <el-button type="primary" @click="submitForm">提交</el-button>

@@ -35,11 +35,14 @@ public class RegexUtilTest {
     @Test
     public void test_ip(){
         String source="10.25.0.1";
+        org.junit.Assert.assertTrue(RegexUtil.equalsWildcard(source, "10.25.*"));
+        org.junit.Assert.assertFalse(RegexUtil.equalsWildcard(source, "10.25.*."));
         org.junit.Assert.assertFalse(RegexUtil.equalsWildcard(source, "10.26.*.*"));
         org.junit.Assert.assertFalse(RegexUtil.equalsWildcard(source, "10.25.*.2"));
         org.junit.Assert.assertTrue(RegexUtil.equalsWildcard(source, "10.25.*.*"));
         org.junit.Assert.assertTrue(RegexUtil.equalsWildcard(source, "10.25.0.*"));
         org.junit.Assert.assertTrue(RegexUtil.equalsWildcard(source, "10.25.*.1*"));
+        org.junit.Assert.assertTrue(RegexUtil.equalsWildcard(source, "10.25.*.1"));
         org.junit.Assert.assertTrue(RegexUtil.equalsWildcard(source, "*"));
     }
 
