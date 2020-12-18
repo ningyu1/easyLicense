@@ -19,6 +19,15 @@ Apache License Version 2.0
 - `easyLicense-core`: 证书核心
 - `easyLicense-server`: 生成`License证书`demo
 
+## 许可证可控制范围
+
+除了TrueLicense可控制的常规字段【主题、生效时间、过期时间、consumerType、consumerAmount】以外扩展了下面控制
+
+* 可控制机器IP地址，支持IPv4，`*`代表不控制，可控制ip段 例如：10.5.10.* -> 允许10.5.10.以内任意ip
+* 可控制机器MAC地址，`*`代表不控制
+* 可控制cpu序列号，`*`代表不控制
+* 可控制主板序列号，`*`代表不控制
+
 ## easyLicense-server
 
 ### 获取服务器硬件信息
