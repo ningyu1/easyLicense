@@ -2,6 +2,7 @@ package io.ningyu.license;
 
 import de.schlichtherle.license.*;
 import de.schlichtherle.xml.GenericCertificate;
+import io.ningyu.utils.RegexUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -146,22 +147,22 @@ public class CustomLicenseManager extends LicenseManager {
 
         if (expectedCheckModel != null && serverCheckModel != null) {
             //校验IP地址
-            if (!check(expectedCheckModel.getIpAddress(), serverCheckModel.getIpAddress())) {
+            if (!RegexUtil.checkWildcard(expectedCheckModel.getIpAddress(), serverCheckModel.getIpAddress())) {
                 throw new LicenseContentException("当前服务器的IP没在授权范围内");
             }
 
             //校验Mac地址
-            if (!check(expectedCheckModel.getMacAddress(), serverCheckModel.getMacAddress())) {
+            if (!RegexUtil.check(expectedCheckModel.getMacAddress(), serverCheckModel.getMacAddress())) {
                 throw new LicenseContentException("当前服务器的Mac地址没在授权范围内");
             }
 
             //校验主板序列号
-            if (!check(expectedCheckModel.getMainBoardSerial(), serverCheckModel.getMainBoardSerial())) {
+            if (!RegexUtil.check(expectedCheckModel.getMainBoardSerial(), serverCheckModel.getMainBoardSerial())) {
                 throw new LicenseContentException("当前服务器的主板序列号没在授权范围内");
             }
 
             //校验CPU序列号
-            if (!check(expectedCheckModel.getCpuSerial(), serverCheckModel.getCpuSerial())) {
+            if (!RegexUtil.check(expectedCheckModel.getCpuSerial(), serverCheckModel.getCpuSerial())) {
                 throw new LicenseContentException("当前服务器的CPU序列号没在授权范围内");
             }
         } else {
@@ -220,32 +221,6 @@ public class CustomLicenseManager extends LicenseManager {
         return SERVER_INFOS;
     }
 
-    /**
-     * 校验当前服务器的IP/Mac地址是否在可被允许的IP范围内<br/>
-     * 如果存在IP在可被允许的IP/Mac地址范围内，则返回true
-     *
-     * @param expectedList
-     * @param serverList
-     * @return boolean
-     */
-    private boolean check(List<String> expectedList, List<String> serverList) {
-        if (expectedList != null && expectedList.size() > 0) {
-            if (serverList != null && serverList.size() > 0) {
-                for (String expected : expectedList) {
-                    //通配符*不控制
-                    if (expected.equals("*")) {
-                        return true;
-                    }
-                    if (serverList.contains(expected.trim())) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        } else {
-            //证书中没有控制信息也作为不控制处理
-            return true;
-        }
-    }
+
 
 }
