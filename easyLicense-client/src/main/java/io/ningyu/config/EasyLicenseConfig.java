@@ -45,6 +45,11 @@ public class EasyLicenseConfig {
      */
     private String publicKeysStorePath;
 
+    /**
+     * 临时文件文职
+     */
+    private String tmp;
+
     public String getName()
     {
         return name;
@@ -113,5 +118,13 @@ public class EasyLicenseConfig {
 
     public void setPublicKeysStorePath(String publicKeysStorePath) {
         this.publicKeysStorePath = publicKeysStorePath;
+    }
+
+    public String getTmp() {
+        return this.tmp.endsWith("/") ? tmp : (tmp + "/");
+    }
+
+    public void setTmp(String tmp) {
+        this.tmp = tmp;
     }
 }
