@@ -18,6 +18,34 @@ Apache License Version 2.0
 - `easyLicense-client`: 验证`License证书`demo
 - `easyLicense-core`: 证书核心
 - `easyLicense-server`: 生成`License证书`demo
+- `cert`: 提供测试使用的证书文件
+
+### 测试证书说明
+
+```markdown
+cert/certfile.cer: 证书文件
+cert/privateKeys.keystore: 私钥
+cert/publicCerts.keystore: 公钥
+cert/license.lic: 文件内容如下
+{
+	"subject": "test",
+	"alias": "privatekey",
+	"keyPass": "123456a",
+	"storePass": "123456a",
+	"privateKeysStorePath": "privateKeys.keystore",
+	"issuedTime": "2020-07-10 00:00:01",
+	"expiryTime": "2021-12-04 18:59:59",
+	"consumerType": "User",
+	"consumerAmount": 1,
+	"description": "这是证书描述信息",
+	"licenseCheckModel": {
+		"ipAddress": ["172.31.0.13", "192.168.8.*"],
+		"macAddress": ["a4:83:e7:5a:5e:64", "50-7B-9D-F9-18-41"],
+		"cpuSerial": ["*"],
+		"mainBoardSerial": ["FVFZ2E0HL410"]
+	}
+}
+```
 
 ## 许可证可控制范围
 
