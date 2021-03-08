@@ -170,6 +170,26 @@ public class CustomLicenseManager extends LicenseManager {
         }
     }
 
+    /**
+     * 获取LicenseContent
+     *
+     * @return
+     * @throws Exception
+     */
+    public LicenseContent getContent() throws Exception {
+        GenericCertificate certificate = getCertificate();
+
+        // Load license key from preferences,
+        final byte[] key = getLicenseKey();
+        if (null == key) {
+            throw new NoLicenseInstalledException(getLicenseParam().getSubject());
+        }
+
+        certificate = getPrivacyGuard().key2cert(key);
+        final LicenseContent content = (LicenseContent) this.load(certificate.getEncoded());
+        return content;
+    }
+
 
     /**
      * 重写XMLDecoder解析XML
