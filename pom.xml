@@ -25,7 +25,7 @@
 		<commons-io>2.7</commons-io>
 		<commons-codec>1.11</commons-codec>
 		<httpclient>4.5.13</httpclient>
-		<fastjson>1.2.47</fastjson>
+		<fastjson>1.2.83</fastjson>
 		<javax.servlet-api>4.0.1</javax.servlet-api>
 		<truelicense>1.33</truelicense>
 		<jna.version>5.6.0</jna.version>
